@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Cote.js example</title>
+<style type="text/css">
+  body {
+    font-family: Helvetica Neue;
+    font-weight: 500;
+    font-size: 24px;
+  }
+</style>
+</head>
+<body>
+<script src="/socket.io/socket.io.js"></script>
+<script>
+  var socket = io.connect('http://localhost:5555');
+  var socket2 = io.connect('http://localhost:5555/rnd');
+
+  setInterval(function() {
+    var req = {
+      val: ~~(Math.random() * 10)
+    };
+
+    var req2 = {
+      val: ~~(Math.random() * 10)
+    };
+
+    socket.emit('randomRequest', req, function(data) {
+      console.log('normal', req.val, data);
+      document.body.innerHTML = 'request ' + req.val + ', response: ' + data + '<br/>' + document.body.innerHTML;
+    });
+
+    socket2.emit('randomRequest', req2, function(data) {
+      console.log('ns', req2.val, data);
+      document.body.innerHTML = 'namespaced request ' + req2.val + ', response: ' + data + '<br/>' + document.body.innerHTML;
+    });
+  }, 3000);
+
+  socket.on('randomUpdate', function(message) {
+    document.body.innerHTML = 'received broadcast: ' + message.val + '<br/>' + document.body.innerHTML;
+  });
+
+</script>
+
+</body>
+</html>
+
