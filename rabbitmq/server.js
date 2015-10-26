@@ -1,5 +1,5 @@
 var amqp = require('amqp'),
-    connection = amqp.createConnection(),
+    connection = amqp.createConnection({host:'localhost'}),
     workId = 0;
 
 connection.on('ready', function() {
