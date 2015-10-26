@@ -21,13 +21,8 @@
       val: ~~(Math.random() * 10)
     };
 
-    var req2 = {
-      val: ~~(Math.random() * 10)
-    };
-
-
-    socket2.emit('randomRequest', req2, function(data) {
-      document.body.innerHTML = 'namespaced request ' + req2.val + ', response: ' + data + '<br/>' + document.body.innerHTML;
+    socket2.emit('randomRequest', req, function(data) {
+      document.body.innerHTML = 'namespaced request ' + req.val + ', response: ' + data + '<br/>' + document.body.innerHTML;
     });
   }, 3000);
 
