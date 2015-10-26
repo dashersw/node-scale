@@ -1,22 +1,13 @@
-var Publisher = require('cote').Publisher;
+var Publisher = require('cote').Publisher,
+    publisher = new Publisher({
+        name: 'publisher',
+        broadcasts: ['update']
+    }),
+    workId = 0;
 
-// Instantiate a new Publisher component.
-var randomPublisher = new Publisher({
-    name: 'randomPub',
-    // namespace: 'rnd',
-    broadcasts: ['randomUpdate']
-});
-
-// Wait for the publisher to find an open port and listen on it.
-randomPublisher.on('ready', function() {
+publisher.on('ready', function() {
     setInterval(function() {
-        var val = {
-            val: ~~(Math.random() * 1000)
-        };
-
-        console.log('emitting', val);
-
-        // publish an event with arbitrary data at any time
-        randomPublisher.publish('randomUpdate', val);
+        console.log('emitting', ++workId);
+        publisher.publish('update', workId);
     }, 3000);
 });
